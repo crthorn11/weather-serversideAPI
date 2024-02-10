@@ -9,35 +9,47 @@
 //link the API
 //confirm that everything works (use bootstrap to speed up the process?)
 
-function getApi() {
-  
-  var requestUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=7a93581a9091d6474b9d472ae7167ce6`;
+const weatherForm = document.querySelector(".weatherForm");
+const cityInput = document.querySelector(".cityInput");
+const card = document.querySelector(".card");
+const apiKey = "7a93581a9091d6474b9d472ae7167ce6";
 
-  fetch(requestUrl)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      console.log(data)
-      for (var i = 0; i < data.length; i++) {
-    
-        var createTableRow = document.createElement('tr');
-        var tableData = document.createElement('td');
-        var link = document.createElement('a');
+weatherForm.addEventListener("submit",async event => {
+ 
+  event.preventDefault();
 
-        link.textContent = data[i].html_url;
-        link.href = data[i].html_url;
+  const city = cityInput.value;
 
-        tableData.appendChild(link);
-        createTableRow.appendChild(tableData);
-        tableBody.appendChild(createTableRow);
-      }
-    });
+  if(city){
+try{
+const weatherData = await getWeatherData(city);
+displayWeatherInfo(weatherData);
+}
+catch(error){
+  console.error(error);
+  displayError(error);
+}
+  }
+  else{
+    displayError("error, Please enter a city");
+  }
+});
+
+async function getWeatherData(city){
+
 }
 
-fetchButton.addEventListener('click', getApi);
-function getUserInput() {
-  var city = document.getElementById("city-input");
-  fetchButton.addEventListener('click', getUserInput);
-  document.getElementById(city-input).city = " ";
+function displayWeatherInfo(data){
+
+}
+
+function displayError(message){
+
+  const errorDisplay = document.createElement("p");
+  errorDisplay.textContent = message;
+  errorDisplay.classList.add("errorDisplay");
+
+  card.textContent = "";
+  card.style.display = "flex";
+  card.appendChild(errorDisplay);
 }
