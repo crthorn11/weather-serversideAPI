@@ -37,9 +37,22 @@ catch(error){
 
 async function getWeatherData(city){
 
+  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+  const response = await fetch(apiUrl);
+
+  if(!response.ok){
+    throw new Error("Could not get weather status");
+
+  }
+  return await response.json();
 }
 
 function displayWeatherInfo(data){
+
+const {name: city, main: {temp, humidity}, weather: [{description, id}]} = data;
+
+card.textContent = "";
+card.style.display = "flex";
 
 }
 
