@@ -71,3 +71,10 @@ p{
     font-weight: bold;
     color: red;
 }
+.dayCard {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  }

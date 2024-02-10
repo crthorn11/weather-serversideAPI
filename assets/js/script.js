@@ -54,6 +54,26 @@ const {name: city, main: {temp, humidity}, weather: [{description, id}]} = data;
 card.textContent = "";
 card.style.display = "flex";
 
+const cityDisplay = document.createElement("h1");
+const tempDisplay = document.createElement("p");
+const humidityDisplay = document.createElement("p");
+const descDisplay = document.createElement("p");
+
+cityDisplay.textContent = city;
+tempDisplay.textContent = `${((temp - 273.15) * (9/5) + 32).toFixed(1)}f`;
+humidityDisplay.textContent = `Humidity: ${humidity}%`;
+descDisplay.textContent = description;
+
+cityDisplay.classList.add("cityDisplay");
+tempDisplay.classList.add("tempDisplay");
+humidityDisplay.classList.add("humidityDisplay");
+descDisplay.classList.add("descDisplay");
+
+
+card.appendChild(cityDisplay);
+card.appendChild(tempDisplay);
+card.appendChild(humidityDisplay);
+card.appendChild(descDisplay);
 }
 
 function displayError(message){
@@ -65,4 +85,15 @@ function displayError(message){
   card.textContent = "";
   card.style.display = "flex";
   card.appendChild(errorDisplay);
+}
+
+const days = ["Sunday", "Monday", "Tuesday", "Wednsday", "Thursday", "Friday", "Saturday",];
+
+function CheckDay(day){
+  if(day =d.getDay() > 6){
+    return day =d.getDay()-7;
+  }
+  else{
+    return day +d.getDay();
+  }
 }
