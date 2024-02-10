@@ -3,18 +3,11 @@
 //I need to create a search bar as a form input
 //list some cities below the form input search bar?
 //create a div box in body for the current day and conditions
+//use html just to see what each card will look like
+//delete each card as I will have script add the cards for me now that I know what they look like
 //create a lower portion with 5 seperate boxes of weather conditions for the next 5 days
 //link the API
 //confirm that everything works (use bootstrap to speed up the process?)
-
-//var fetchButton = document.getElementById('btn');
-//const city = "Mount Laurel";
-
-//function getUserInput() {
-//  var city = document.getElementById("city-input");
-//  fetchButton.addEventListener('click', getUserInput);
-//  document.getElementById(city-input).city = " ";
-//}
 
 function getApi() {
   

@@ -41,11 +41,33 @@ button[type="submit"]:hover{
     align-items: center;
 }
 h1{
-    font-size: 3.5rem;
     margin-top: 0;
     margin-bottom: 25px;
 }
 p{
     font-size: 1.5rem;
     margin: 5px 0;
+}
+.cityDisplay, .tempDisplay{
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: hsla(black);
+    margin-bottom: 25px;
+}
+.humidityDisplay{
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+.descDisplay{
+    font-weight: bold;
+    font-size: 2rem;
+}
+.weatherForm{
+    margin: 0;
+    font-size: 7rem;
+}
+.errorDisplay{
+    font-size: 3rem;
+    font-weight: bold;
+    color: hsla(red);
 }
