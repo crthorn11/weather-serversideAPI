@@ -12,7 +12,9 @@
 const weatherForm = document.querySelector(".weatherForm");
 const cityInput = document.querySelector(".cityInput");
 const card = document.querySelector(".card");
+const forecastCard = document.querySelector(".forecastCard");
 const apiKey = "7a93581a9091d6474b9d472ae7167ce6";
+const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 weatherForm.addEventListener("submit",async event => {
  
@@ -23,7 +25,11 @@ weatherForm.addEventListener("submit",async event => {
   if(city){
 try{
 const weatherData = await getWeatherData(city);
+console.log(weatherData);
 displayWeatherInfo(weatherData);
+const forecastData = await getForecastData(city);
+console.log(forecastData);
+displayForecastInfo(forecastData);
 }
 catch(error){
   console.error(error);
@@ -47,19 +53,57 @@ async function getWeatherData(city){
   return await response.json();
 }
 
+async function getForecastData(city){
+
+  const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
+  const response = await fetch(apiUrl);
+
+  if(!response.ok){
+    throw new Error("Could not get weather status");
+
+  }
+  return await response.json();
+}
+
 function displayWeatherInfo(data){
 
-const {name: city, main: {temp, humidity}, weather: [{description, id}]} = data;
+  const {name: city, main: {temp, humidity}, weather: [{description, id}]} = data;
+  card.textContent = "";
+  card.style.display = "flex";
+  
+  const cityDisplay = document.createElement("h1");
+  const tempDisplay = document.createElement("p");
+  const humidityDisplay = document.createElement("p");
+  const descDisplay = document.createElement("p");
+  
+  tempDisplay.textContent = `${((temp - 273.15) * (9/5) + 32).toFixed(1)}f`;
+  humidityDisplay.textContent = `Humidity: ${humidity}%`;
+  descDisplay.textContent = description;
+  
+  cityDisplay.classList.add("cityDisplay");
+  tempDisplay.classList.add("tempDisplay");
+  humidityDisplay.classList.add("humidityDisplay");
+  descDisplay.classList.add("descDisplay");
+  
+  
+  card.appendChild(cityDisplay);
+  card.appendChild(tempDisplay);
+  card.appendChild(humidityDisplay);
+  card.appendChild(descDisplay);
+  }
 
-card.textContent = "";
-card.style.display = "flex";
+function displayForecastInfo(data){
+  forecastCard.textContent = "";
+  forecastCard.style.display = "flex";
+  for (let i = 0; i < data.list.length; i+= 8) {
+
+const {name: city, main: {temp, humidity}, weather: [{description, id}]} = data.list[i];
 
 const cityDisplay = document.createElement("h1");
 const tempDisplay = document.createElement("p");
 const humidityDisplay = document.createElement("p");
 const descDisplay = document.createElement("p");
 
-cityDisplay.textContent = city;
 tempDisplay.textContent = `${((temp - 273.15) * (9/5) + 32).toFixed(1)}f`;
 humidityDisplay.textContent = `Humidity: ${humidity}%`;
 descDisplay.textContent = description;
@@ -69,13 +113,15 @@ tempDisplay.classList.add("tempDisplay");
 humidityDisplay.classList.add("humidityDisplay");
 descDisplay.classList.add("descDisplay");
 
-
-card.appendChild(cityDisplay);
-card.appendChild(tempDisplay);
-card.appendChild(humidityDisplay);
-card.appendChild(descDisplay);
+const dayCard = document.createElement("div");
+dayCard.classList.add("card");
+dayCard.appendChild(cityDisplay);
+dayCard.appendChild(tempDisplay);
+dayCard.appendChild(humidityDisplay);
+dayCard.appendChild(descDisplay);
+forecastCard.appendChild(dayCard);
 }
-
+}
 function displayError(message){
 
   const errorDisplay = document.createElement("p");
@@ -85,15 +131,4 @@ function displayError(message){
   card.textContent = "";
   card.style.display = "flex";
   card.appendChild(errorDisplay);
-}
-
-const days = ["Sunday", "Monday", "Tuesday", "Wednsday", "Thursday", "Friday", "Saturday",];
-
-function CheckDay(day){
-  if(day =d.getDay() > 6){
-    return day =d.getDay()-7;
-  }
-  else{
-    return day +d.getDay();
-  }
 }
